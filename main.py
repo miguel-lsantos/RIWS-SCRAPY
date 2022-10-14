@@ -17,6 +17,10 @@ def form_post(request: Request):
 
 
 @app.post("/form")
-def form_post(request: Request, query: str = Form(...)):
-    query += " ha sido buscado"
-    return templates.TemplateResponse('form.html', context={'request': request, 'result': query})
+def form_post(request: Request, query: list[str] = Form(...)):
+    results = ["Hola"]
+    results += query
+    results += query
+    results += query
+    results.append("Adios")
+    return templates.TemplateResponse('form.html', context={'request': request, 'results': results})

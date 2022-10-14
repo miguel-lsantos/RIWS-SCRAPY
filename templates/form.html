@@ -9,8 +9,8 @@
     <input type="string" name="query" placeholder="Buscar..."/>
     <input type="submit">
 </form>
-
-<p>Result: {{ result }}</p>
-
+{% for result in results %}
+<p>Result: {{result}}</p>
+{% endfor %}
 </body>
 </html>
