@@ -10,3 +10,7 @@ class QuoteItem(scrapy.Item):
     author = scrapy.Field()
     quote = scrapy.Field()
     tags = scrapy.Field()
+    categories = scrapy.Field()
+
+class CategoriesItem(scrapy.Item):
+    categories = scrapy.Field()
