@@ -39,9 +39,10 @@ class ChollometroSpider(scrapy.Spider):
             categories_item = []
             for categories_selector in response.xpath(
                     '//ul[contains(@class, "cept-breadcrumbsList flex flex--fromW2-wrap size--all-s text--lh-1")]/li'):
-                item = ""
                 if categories_selector.xpath('./span[1]/a/text()').get() is not None:
-                    item = categories_selector.xpath('./span[1]/a/text()').get().split()
+                    categories_item.append(categories_selector.xpath('./span[1]/a/text()').get().strip())
+                elif len(categories_selector.xpath('./span').getall()) == 1:
+                    categories_item.append(categories_selector.xpath('./span/text()').get().strip())
             quote_item = QuoteItem(author=value_title, quote=value_empresa, tags=value_descripcion, categories = categories_item)
             yield quote_item
 
@@ -50,7 +51,8 @@ class ChollometroSpider(scrapy.Spider):
             category = quote_selector.xpath('./h3/text()').get().strip()
             self.categories.append(category)
             hub = quote_selector.xpath('./ol/li[8]/a/@href').get().split('/')[-1]
-            yield scrapy.Request(self.start_urls[0] + "/hub/" + hub, self.parse_hub)
+            if hub == "electronica":
+                yield scrapy.Request(self.start_urls[0] + "/hub/" + hub, self.parse_hub)
             self.categories.remove(category)
 
     def parse_hub(self, response):
