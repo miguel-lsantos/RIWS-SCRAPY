@@ -26,8 +26,7 @@ class ElasticSearchPipeline(object):
                     "analyzer": "spanish"
                 },
                 "seller": {
-                    "type": "text",
-                    "analyzer": "spanish"
+                    "type": "keyword"
                 },
                 "description": {
                     "type": "text",

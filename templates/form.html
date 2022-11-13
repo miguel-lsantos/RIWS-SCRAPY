@@ -37,8 +37,15 @@ div {
     <title>Sample Form</title>
 </head>
 <body>
+
 <form method="post">
     <input type="text" name="query" placeholder="Buscar..." required/>
+    <select name="seller">
+        <option>Todos</option>
+        {% for option in options %}
+        <option>{{option}}</option>
+        {% endfor %}
+    </select>
     <input type="submit">
 </form>
 {% for result in results %}
