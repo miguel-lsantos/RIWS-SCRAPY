@@ -50,6 +50,8 @@ div {
 </form>
 {% for result in results %}
 <p>Result: {{result}}</p>
+<p>Score: {{result._score}}</p>
+<p>Article: {{result._source.article}}</p>
 {% endfor %}
 </body>
 </html>

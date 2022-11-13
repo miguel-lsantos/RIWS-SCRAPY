@@ -1,7 +1,6 @@
 from elasticsearch import Elasticsearch
 from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
-from scrapy.utils.project import get_project_settings
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates/")
@@ -65,7 +64,7 @@ def search(query_string: str, seller: str):
                         "query": query_string,
                         "fields": ["article", "description", "categories"],
                         "analyzer": "spanish",
-                        "fuzziness": "AUTO",
+                        "fuzziness": "AUTO"
                     }
                 }
             }
@@ -95,12 +94,11 @@ def form_post(request: Request):
 
 @app.post("/")
 def form_post2(request: Request, query: str = Form(...), seller: str = Form(...)):
-    results = ["Hola"]
+    results = []
     options = get_category_options()
     try:
         for result in search(query, seller):
             results.append(result)
     except Exception as e:
         results.append(e)
-    results.append("Adios")
     return templates.TemplateResponse('form.html', context={'request': request, 'results': results, "options": options})
