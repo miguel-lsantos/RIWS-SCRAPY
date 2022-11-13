@@ -35,6 +35,10 @@ class ElasticSearchPipeline(object):
                 "categories": {
                     "type": "text",
                     "analyzer": "spanish"
+                },
+                "url": {
+                    "type": "keyword",
+                    "index": False
                 }
         }
 

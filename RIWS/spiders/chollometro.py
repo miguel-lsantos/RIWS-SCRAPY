@@ -27,6 +27,7 @@ class ChollometroSpider(scrapy.Spider):
             value_empresa = title_div.xpath('./span/a/span/span/text()').get()
             if value_empresa is not None:
                 value_empresa = value_empresa.split('\t')
+            value_link = title_div.xpath('./strong/a/@href').get()
             value_descripcion = inner_div.xpath(
                 './div[contains(@class, "threadGrid-body")]/div/div/text()'
             ).get()
@@ -39,7 +40,7 @@ class ChollometroSpider(scrapy.Spider):
                     categories_item.append(categories_selector.xpath('./span/text()').get().strip())
             if value_title is not None:
                 chollometro_item = ChollometroItem(article=value_title, seller=value_empresa,
-                                                   description=value_descripcion, categories=categories_item)
+                                                   description=value_descripcion, categories=categories_item, url=value_link)
                 yield chollometro_item
 
     def parse_hub(self, response):
