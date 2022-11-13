@@ -53,15 +53,10 @@ class ElasticSearchPipeline(object):
         return item
 
     def _get_item_key(self, item):
-        uniq = self.__get_uniq_key()
-
-        if isinstance(uniq, list):
-            values = [item[key] for key in uniq]
-            value = ''.join(values)
-        else:
-            value = uniq
-
-        return hashlib.sha1(value.encode()).hexdigest()
+        uniq_key = self.__get_uniq_key()
+        if uniq_key is None:
+            return item['article']
+        return hashlib.sha1(item[uniq_key][0].encode('utf-8')).hexdigest()
 
     def __get_uniq_key(self):
         if not self.settings['ELASTICSEARCH_UNIQ_KEY'] or self.settings['ELASTICSEARCH_UNIQ_KEY'] == "":

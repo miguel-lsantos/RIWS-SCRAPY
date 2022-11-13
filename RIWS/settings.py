@@ -26,7 +26,7 @@ ELASTICSEARCH_USERNAME = ''
 ELASTICSEARCH_PASSWORD = ''
 ELASTICSEARCH_INDEX = 'scrapy'
 ELASTICSEARCH_TYPE = 'items'
-ELASTICSEARCH_UNIQ_KEY = 'author'
+ELASTICSEARCH_UNIQ_KEY = 'article'
 
 # can also accept a list of fields if need a composite key
 # ELASTICSEARCH_UNIQ_KEY = ['url', 'id']

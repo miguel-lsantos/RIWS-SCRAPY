@@ -37,8 +37,10 @@ class ChollometroSpider(scrapy.Spider):
                     categories_item.append(categories_selector.xpath('./span[1]/a/text()').get().strip())
                 elif len(categories_selector.xpath('./span').getall()) == 1:
                     categories_item.append(categories_selector.xpath('./span/text()').get().strip())
-            quote_item = ChollometroItem(article=value_title, seller=value_empresa, description=value_descripcion, categories = categories_item)
-            yield quote_item
+            if value_title is not None:
+                chollometro_item = ChollometroItem(article=value_title, seller=value_empresa,
+                                                   description=value_descripcion, categories=categories_item)
+                yield chollometro_item
 
     def parse_hub(self, response):
         categories_selectors = response.xpath('//ol[contains(@class, "iGrid bg--color-blackTranslucent bRad--fromW3-a overflow--hidden")]/li')
