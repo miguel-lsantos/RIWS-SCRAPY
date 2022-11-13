@@ -64,7 +64,7 @@ def search(query_string: str, seller: str):
                     "multi_match": {
                         "query": query_string,
                         "fields": ["article", "description", "categories"],
-                        "analyzer": "standard",
+                        "analyzer": "spanish",
                         "fuzziness": "AUTO",
                     }
                 }
