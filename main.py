@@ -18,28 +18,26 @@ def search(query_string: str):
         es = Elasticsearch(hosts=[uri], basic_auth=(ELASTICSEARCH_USERNAME,
                                                          ELASTICSEARCH_PASSWORD))
 
-    query_body = {
-        "query": {
-            "simple_query_string": {
-                "query": query_string,
-                "fields": ["*"]
-            }
-        }
-    }
     # query_body = {
     #     "query": {
-    #         "multi_match": {
+    #         "simple_query_string": {
     #             "query": query_string,
-    #             "fields": ["quote", "author", "tags"],
-    #             "zero_terms_query": "all",
-    #             "analyzer": "standard",
-    #             "fuzziness": "AUTO",
-    #             "minimum_should_match": 0
+    #             "fields": ["*"]
     #         }
     #     }
     # }
+    query_body = {
+        "query": {
+            "multi_match": {
+                "query": query_string,
+                "fields": ["article", "seller", "description", "categories"],
+                "analyzer": "standard",
+                "fuzziness": "AUTO",
+            }
+        }
+    }
 
-    search_result = es.search(index=ELASTICSEARCH_INDEX, body=query_body, min_score=0, explain=True)
+    search_result = es.search(index=ELASTICSEARCH_INDEX, body=query_body, min_score=0, explain=False, size=1000)
     print(search_result)
     print(search_result.body["hits"]["hits"])
     for hit in search_result.body["hits"]["hits"]:
