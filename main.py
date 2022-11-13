@@ -25,8 +25,22 @@ def search(query_string: str):
                 "fields": ["*"]
             }
         }
-}
-    search_result = es.search(index=ELASTICSEARCH_INDEX, body=query_body)
+    }
+    # query_body = {
+    #     "query": {
+    #         "multi_match": {
+    #             "query": query_string,
+    #             "fields": ["quote", "author", "tags"],
+    #             "zero_terms_query": "all",
+    #             "analyzer": "standard",
+    #             "fuzziness": "AUTO",
+    #             "minimum_should_match": 0
+    #         }
+    #     }
+    # }
+
+    search_result = es.search(index=ELASTICSEARCH_INDEX, body=query_body, min_score=0, explain=True)
+    print(search_result)
     print(search_result.body["hits"]["hits"])
     for hit in search_result.body["hits"]["hits"]:
         yield hit

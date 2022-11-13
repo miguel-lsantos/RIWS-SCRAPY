@@ -22,16 +22,20 @@ class ElasticSearchPipeline(object):
 
         properties = {
                 "article": {
-                    "type": "text"  # formerly "string"
+                    "type": "text", # formerly "string"
+                    "analyzer": "standard"
                 },
                 "seller": {
-                    "type": "text"
+                    "type": "text",
+                    "analyzer": "standard"
                 },
                 "description": {
-                    "type": "text"
+                    "type": "text",
+                    "analyzer": "standard"
                 },
                 "categories": {
-                    "type": "text"
+                    "type": "text",
+                    "analyzer": "standard"
                 }
         }
 
