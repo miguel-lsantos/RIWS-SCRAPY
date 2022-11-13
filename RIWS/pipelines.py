@@ -21,13 +21,16 @@ class ElasticSearchPipeline(object):
                                                                 self.settings['ELASTICSEARCH_PASSWORD']))
 
         properties = {
-                "author": {
+                "article": {
                     "type": "text"  # formerly "string"
                 },
-                "quote": {
+                "seller": {
                     "type": "text"
                 },
-                "tags": {
+                "description": {
+                    "type": "text"
+                },
+                "categories": {
                     "type": "text"
                 }
         }

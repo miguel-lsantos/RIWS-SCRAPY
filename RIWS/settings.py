@@ -12,7 +12,7 @@ SPIDER_MODULES = ['RIWS.spiders']
 NEWSPIDER_MODULE = 'RIWS.spiders'
 
 # Obey robots.txt rules
-ROBOTSTXT_OBEY = True
+ROBOTSTXT_OBEY = False
 
 # Configure item pipelines
 # See http://scrapy.readthedocs.org/en/latest/topics/item-pipeline.html
