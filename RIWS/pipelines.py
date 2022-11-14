@@ -39,6 +39,9 @@ class ElasticSearchPipeline(object):
                 "url": {
                     "type": "keyword",
                     "index": False
+                },
+                "price": {
+                    "type": "float",
                 }
         }
 

@@ -31,7 +31,31 @@ div {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+#results {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#results td, #results th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#results tr:nth-child(even){background-color: #f2f2f2;}
+
+#results tr:hover {background-color: #ddd;}
+
+#results th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4CAF50;
+  color: white;
+}
 </style>
+<script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <head>
     <meta charset="UTF-8">
     <title>Sample Form</title>
@@ -48,10 +72,27 @@ div {
     </select>
     <input type="submit">
 </form>
-{% for result in results %}
-<p>Result: {{result}}</p>
-<p>Score: {{result._score}}</p>
-<p>Article: {{result._source.article}}</p>
-{% endfor %}
+<table id="results" class="sortable">
+    <tr>
+        <th>Article</th>
+        <th>Score</th>
+        <th class="sorttable_nosort">Description</th>
+        <th class="sorttable_nosort">Url</th>
+        <th>Seller</th>
+        <th class="sorttable_nosort">Categories</th>
+        <th class="sorttable_numeric">Price</th>
+    </tr>
+    {% for result in results %}
+    <tr>
+        <td>{{result._source.article}}</td>
+        <td>{{result._score}}</td>
+        <td>{{result._source.description}}</td>
+        <td>{{result._source.url}}</td>
+        <td>{{result._source.seller}}</td>
+        <td>{{result._source.categories}}</td>
+        <td>{{result._source.price}}€</td>
+    </tr>
+    {% endfor %}
+</table>
 </body>
 </html>

@@ -12,3 +12,4 @@ class ChollometroItem(scrapy.Item):
     description = scrapy.Field()
     categories = scrapy.Field()
     url = scrapy.Field()
+    price = scrapy.Field()
