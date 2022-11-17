@@ -126,11 +126,11 @@ function App() {
                 tooltipTrigger='hover'
                 range={{
                   start: 0,
-                  end: 4000,
+                  end: 3000,
                 }}
                 rangeLabels={{
                   start: "0",
-                  end: "4000",
+                  end: "3000",
                 }}
                 react={{
                   and: [
@@ -189,7 +189,7 @@ function App() {
                               <b className="article-text" id={"article"}>{res.article}</b>
                             </a>
                           </div>
-                          <div className="price">${res.price}</div>
+                          <div className="price">{res.price}€</div>
                         </div>
                       </div>
                       <br/>
