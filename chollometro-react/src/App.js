@@ -1,32 +1,49 @@
 // import logo from './logo.svg';
 import './App.css';
-import {ReactiveBase, SearchBox, MultiList, ReactiveList, TreeList, RangeSlider} from "@appbaseio/reactivesearch";
+import {ReactiveBase,MultiList,ReactiveList,RangeSlider,DataSearch} from "@appbaseio/reactivesearch";
 
 function App() {
-
   return (
       <ReactiveBase
           app="scrapy"
           url="http://localhost:9200"
-          // enableAppbase
           theme={{
             typography: {
               fontFamily:
                   '-apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Noto Sans", "Ubuntu", "Droid Sans", "Helvetica Neue", sans-serif',
               fontSize: "16px"
-            },
-            colors: {
-              backgroundColor: "#212121",
-              primaryTextColor: "#fff",
-              primaryColor: "#2196F3",
-              titleColor: "#fff",
-              alertColor: "#d9534f",
-              borderColor: "#666",
-            },
+            }
           }}
       >
-      <div className="flexFirstRow">
+        <div className="flexFirstRow">
           <div className="flexBoxColumn">
+            <DataSearch
+                componentId="Search"
+                dataField={["article","description"]}
+                fieldWeights={[3, 1]}
+                mode="select" // accepts either of 'select' or 'tag' defaults to 'select'
+                title="Search"
+                placeholder="Search for products"
+                autosuggest={false}
+                // highlight={true}
+                // queryFormat="and"
+                fuzziness="AUTO"
+                debounce={1000}
+                react={{
+                  and: [
+                    "Seller",
+                    "Prices",
+                    "Category",
+                  ],
+                }}
+                size={0}
+                showFilter={true}
+                style={{
+                  padding: '5px',
+                  paddingRight: '10px',
+                  width: '100%',
+                }}
+            />
             <MultiList
                 componentId="Category"
                 dataField="categories"
@@ -35,7 +52,7 @@ function App() {
                 }}
                 title="Categories"
                 className='categories'
-                // size={20}
+                size={100}
                 sortBy='count'
                 queryFormat='or'
                 selectAllLabel='All Categories'
@@ -47,6 +64,7 @@ function App() {
                   and: [
                     "Seller",
                     "Prices",
+                    "Search",
                   ],
                 }}
                 showFilter={true}
@@ -62,8 +80,6 @@ function App() {
                   paddingRight: '10px',
                   width: '100%',
                 }}
-
-
             />
             <MultiList
                 componentId="Seller"
@@ -71,6 +87,7 @@ function App() {
                 style={{
                   marginBottom: 20
                 }}
+                size={100}
                 title="Sellers"
                 className='sellers'
                 // size={20}
@@ -85,6 +102,7 @@ function App() {
                   and: [
                     "Category",
                     "Prices",
+                    "Search",
                   ],
                 }}
                 showFilter={true}
@@ -118,6 +136,7 @@ function App() {
                   and: [
                     "Category",
                     "Seller",
+                    "Search",
                   ],
                 }}
                 showHistogram
@@ -126,9 +145,14 @@ function App() {
                   width: '100%',
                   paddingRight: '10px'
                 }}
+                innerClass={
+                  {
+                    slider: 'slider',
+                  }
+                }
             />
-            </div>
-            <div className="todo">
+          </div>
+          <div className="todo">
             <ReactiveList
                 componentId="results"
                 react={{
@@ -136,6 +160,7 @@ function App() {
                     "Category",
                     "Seller",
                     "Prices",
+                    "Search",
                   ],
                 }}
                 dataField={[
@@ -143,34 +168,26 @@ function App() {
                   { field: "url.keyword", weight: 2 },
                   { field: "price", weight: 1 },
                 ]}
-                size={20}
+                size={24}
                 innerClass={{
                   list: "list"
                 }}
-                // renderItem={res =>
-                //     <div>
-                //       {res.article}
-                //       {res.url}
-                //       {res.price}
-                //     </div>}
-                // print dataField
                 renderItem={res => (
                     <div className="result-card">
-
                       <div className="info-container">
                         <div className="info">
                           <div className="title">
                             <div className="image">
                               <a href={res
-                                .url} target="_blank" rel="noopener noreferrer">
-                              <img src={res.image} alt={res.article}/>
+                                  .url} target="_blank" rel="noopener noreferrer">
+                                <img src={res.image} alt={res.article}/>
                               </a>
                             </div>
-                              <br/>
-                              <a href={res
+                            <br/>
+                            <a href={res
                                 .url} target="_blank" rel="noopener noreferrer">
-                                <b className="article-text" id={"article"}>{res.article}</b>
-                              </a>
+                              <b className="article-text" id={"article"}>{res.article}</b>
+                            </a>
                           </div>
                           <div className="price">${res.price}</div>
                         </div>
@@ -181,6 +198,11 @@ function App() {
 
                 sortOptions={[
                   {
+                    dataField: "_score",
+                    sortBy: "desc",
+                    label: "Relevance",
+                  },
+                  {
                     dataField: "price",
                     sortBy: "asc",
                     label: "Lowest Price",
@@ -189,9 +211,8 @@ function App() {
                     dataField: "price",
                     sortBy: "desc",
                     label: "Highest Price",
-                  },
+                  }
                 ]}
-
                 style={{
                   padding: '5px',
                   width: '80%',
@@ -200,91 +221,9 @@ function App() {
                 pagination={true}
                 paginationAt='bottom'
             />
-            {/*<ReactiveList*/}
-            {/*    defaultQuery={() => ({ track_total_hits: true })}*/}
-            {/*    componentId='results'*/}
-            {/*    dataField={[*/}
-            {/*      { field: "article.keyword", weight: 3 },*/}
-            {/*      { field: "url.keyword", weight: 2 },*/}
-            {/*    ]}*/}
-            {/*    react={{*/}
-            {/*      and: [*/}
-            {/*        "Category",*/}
-            {/*        "Seller",*/}
-            {/*        "Prices",*/}
-            {/*      ],*/}
-            {/*    }}*/}
-            {/*    pagination={true}*/}
-            {/*    className='Result_card'*/}
-            {/*    paginationAt='bottom'*/}
-            {/*    pages={5}*/}
-            {/*    size={12}*/}
-            {/*    Loader='Loading...'*/}
-            {/*    noResults='No results were found...'*/}
-            {/*    // sortOptions={[*/}
-            {/*    //   {*/}
-            {/*    //     dataField: "vote_count",*/}
-            {/*    //     sortBy: "desc",*/}
-            {/*    //     label: "Sort by vote-count(High to Low) \u00A0",*/}
-            {/*    //   },*/}
-            {/*    //   {*/}
-            {/*    //     dataField: "popularity",*/}
-            {/*    //     sortBy: "desc",*/}
-            {/*    //     label: "Sort by Popularity(High to Low)\u00A0 \u00A0",*/}
-            {/*    //   },*/}
-            {/*    //   {*/}
-            {/*    //     dataField: "vote_average",*/}
-            {/*    //     sortBy: "desc",*/}
-            {/*    //     label: "Sort by Ratings(High to Low) \u00A0",*/}
-            {/*    //   },*/}
-            {/*    //   {*/}
-            {/*    //     dataField: "original_title.raw",*/}
-            {/*    //     sortBy: "asc",*/}
-            {/*    //     label: "Sort by Title(A-Z) \u00A0",*/}
-            {/*    //   },*/}
-            {/*    // ]}*/}
-            {/*    innerClass={{*/}
-            {/*      title: "result-title",*/}
-            {/*      listItem: "result-item",*/}
-            {/*      list: "list-container",*/}
-            {/*      sortOptions: "sort-options",*/}
-            {/*      resultStats: "result-stats",*/}
-            {/*      resultsInfo: "result-list-info",*/}
-            {/*      poweredBy: "powered-by",*/}
-            {/*    }}*/}
-            {/*>*/}
-            {/*  {({ data }) => (*/}
-            {/*      <ReactiveList.ResultCardsWrapper style={{ margin: "8px 0 0" }}>*/}
-            {/*        {data.map((item) => (*/}
-            {/*            <div style={{ marginRight: "15px" }} className='main-description'>*/}
-            {/*              <div className='ih-item square effect6 top_to_bottom'>*/}
-            {/*                <a*/}
-            {/*                    target='#'*/}
-            {/*                    href={item.url}*/}
-            {/*                >*/}
-            {/*                  /!*<div className='img'>*!/*/}
-            {/*                  /!*  <img*!/*/}
-            {/*                  /!*      src={item.poster_path}*!/*/}
-            {/*                  /!*      alt={item.original_title}*!/*/}
-            {/*                  /!*      className='result-image'*!/*/}
-            {/*                  /!*  />*!/*/}
-            {/*                  /!*</div>*!/*/}
-
-            {/*                  <div className='info colored'>*/}
-            {/*                    <h3 className='overlay-title'>{item.article}</h3>*/}
-            {/*                    <div className='overlay-description'>{item.description}</div>*/}
-            {/*                  </div>*/}
-            {/*                </a>*/}
-            {/*              </div>*/}
-            {/*            </div>*/}
-            {/*        ))}*/}
-            {/*      </ReactiveList.ResultCardsWrapper>*/}
-            {/*  )}*/}
-            {/*</ReactiveList>*/}
-            </div>
-            </div>
+          </div>
+        </div>
       </ReactiveBase>
-
   );
 }
 
