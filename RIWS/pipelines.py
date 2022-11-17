@@ -33,8 +33,7 @@ class ElasticSearchPipeline(object):
                     "analyzer": "spanish"
                 },
                 "categories": {
-                    "type": "text",
-                    "analyzer": "spanish"
+                    "type": "keyword",
                 },
                 "url": {
                     "type": "keyword",
@@ -42,6 +41,10 @@ class ElasticSearchPipeline(object):
                 },
                 "price": {
                     "type": "float",
+                },
+                "image": {
+                    "type": "keyword",
+                    "index": False
                 }
         }
 

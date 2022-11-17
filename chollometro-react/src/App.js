@@ -27,7 +27,7 @@ function App() {
       >
         <MultiList
             componentId="Category"
-            dataField="categories.keyword"
+            dataField="categories"
             style={{
               marginBottom: 20
             }}
@@ -48,7 +48,7 @@ function App() {
               ],
             }}
             showFilter={true}
-            filterLabel='Genre'
+            filterLabel='Categories'
             URLParams={false}
             innerClass={{
               label: "title",
@@ -64,7 +64,7 @@ function App() {
         />
         <MultiList
             componentId="Seller"
-            dataField="seller.keyword"
+            dataField="seller"
             style={{
               marginBottom: 20
             }}
@@ -149,10 +149,15 @@ function App() {
                   <div className="info-container">
                     <div className="info">
                       <div className="title">
-                        <a href={res
+                          <a href={res
                             .url} target="_blank" rel="noopener noreferrer">
-                          {res.article}
-                        </a>
+                          <img src={res.image} alt={res.article}/>
+                          </a>
+                          <br/>
+                          <a href={res
+                            .url} target="_blank" rel="noopener noreferrer">
+                            <b id={"article"}>{res.article}</b>
+                          </a>
                       </div>
                       <div className="price">${res.price}</div>
                     </div>

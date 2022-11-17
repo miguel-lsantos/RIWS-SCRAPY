@@ -29,7 +29,13 @@ class ChollometroSpider(scrapy.Spider):
                 value_empresa = value_empresa.split('\t')[0]
             price = title_div.xpath('./span/span[contains(@class, "overflow--wrap-off")]/span/text()').get()
             if price is not None:
-                value_price = float(price[:-1].replace(',','.'))
+                if price == "GRATIS":
+                    value_price = 0.0
+                else:
+                    value_price = float(price[:-1].replace(',','.'))
+            image = inner_div.xpath('./div[contains(@class, "threadGrid-image")]/span/img')
+            if image is not None and 'src' in image.attrib:
+                value_image = image.attrib['src']
             external_link_a = inner_div.xpath('./div[contains(@class, "threadGrid-footerMeta")]/div/span[contains(@class, "iGrid-item width--all-12 width--fromW3-auto space--l-0 space--fromW3-l-2 space--t-2 space--fromW3-t-0")]/a')
             if value_title is not None:
                 if len(external_link_a) > 0:
@@ -60,7 +66,7 @@ class ChollometroSpider(scrapy.Spider):
                     categories_item.append(categories_selector.xpath('./span/text()').get().strip())
             if value_title is not None and value_link is not None:
                 chollometro_item = ChollometroItem(article=value_title, seller=value_empresa,
-                                                   description=value_descripcion, categories=categories_item, url=value_link, price=value_price)
+                                                   description=value_descripcion, categories=categories_item, url=value_link, price=value_price, image=value_image)
                 yield chollometro_item
 
     def parse_hub(self, response):
