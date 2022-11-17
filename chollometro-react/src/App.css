@@ -46,6 +46,90 @@ body {
 /*  color : #fff*/
 /*}*/
 
-/*.categories .input {*/
-/*  background : #0e181c*/
-/*}*/
+.categories .input {
+  height: 1.25em;
+}
+
+.sellers .input {
+  height: 1.25em;
+}
+
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 13px;
+}
+
+::-webkit-scrollbar:hover {
+  height: 18px;
+}
+
+::-webkit-scrollbar-track-piece {
+  background-color: #151716;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  height: 50px;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    right top,
+    color-stop(0, #4d4d4d),
+    color-stop(100%, #333)
+  );
+  border: 1px solid #0d0d0d;
+  border-top: 1px solid #666;
+  border-left: 1px solid #666;
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  width: 50px;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0, #4d4d4d),
+    color-stop(100%, #333)
+  );
+  border: 1px solid #1f1f1f;
+  border-top: 1px solid #666;
+  border-left: 1px solid #666;
+}
+
+.list {
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 100px;
+    justify-content: space-around;
+}
+
+.result-card {
+    min-width: 5%;
+    max-width: 33.3%;
+    padding: 5px
+}
+
+.image {
+    max-width: 300px;
+    max-height: 300px;
+}
+
+.title {
+    max-width: 300px;
+}
+
+img {
+    object-fit: contain;
+}
+
+.flexFirstRow {
+    display: flex;
+    width: 20%;
+    justify-content: space-evenly;
+}
+
+.flexBoxColumn {
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
