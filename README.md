@@ -26,3 +26,8 @@ If you have any issues with the project related with venv or dependencies you ca
 ```bash
 make clean # remove venv and dependencies
 ```
+
+## Dependencies
+
+Python3.9+ (pythonX-venv)
+npm 8.19.2
