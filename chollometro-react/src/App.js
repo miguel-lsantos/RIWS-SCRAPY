@@ -165,7 +165,6 @@ function App() {
                 }}
                 dataField={[
                   { field: "article.keyword", weight: 3 },
-                  { field: "url.keyword", weight: 2 },
                   { field: "price", weight: 1 },
                 ]}
                 size={24}
