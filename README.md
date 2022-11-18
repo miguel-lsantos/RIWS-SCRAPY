@@ -20,3 +20,9 @@ To stop the elasticsearch:
 ```bash
 make elastic-down
 ```
+
+## Issues
+If you have any issues with the project related with venv or dependencies you can run the following command:
+```bash
+make clean # remove venv and dependencies
+```

@@ -18,3 +18,6 @@ elastic-down: ## Stop elasticsearch
 
 run-web: ## Run web app
 	cd chollometro-react && npm install && npm start
+
+clean: ## Remove virtual environment
+	rm -rf venv
