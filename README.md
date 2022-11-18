@@ -15,3 +15,8 @@ To run the frontend you need to run the following command:
 ```bash
 make run-web # runs a web in localhost:3000 
 ```
+
+To stop the elasticsearch:
+```bash
+make elastic-down
+```

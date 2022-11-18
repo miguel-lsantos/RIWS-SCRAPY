@@ -17,4 +17,4 @@ elastic-down: ## Stop elasticsearch
 	docker-compose down
 
 run-web: ## Run web app
-	cd chollometro-react && npm start
+	cd chollometro-react && npm install && npm start
